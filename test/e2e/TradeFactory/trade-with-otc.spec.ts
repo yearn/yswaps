@@ -1,12 +1,10 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signers';
-import { TransactionResponse } from '@ethersproject/abstract-provider';
-import { BigNumber, constants, Contract, utils, Wallet } from 'ethers';
+import { constants, Contract, utils } from 'ethers';
 import { ethers } from 'hardhat';
 import moment from 'moment';
-import { contracts, erc20, evm, fixtures, uniswap } from '../../utils';
-import { contract, given, then, when } from '../../utils/bdd';
+import { erc20, evm, fixtures } from '@test-utils';
+import { contract, given, then } from '@test-utils/bdd';
 import { expect } from 'chai';
-import uniswapLibrary from '../../../scripts/libraries/uniswap-v2';
 
 contract('TradeFactory', () => {
   let masterAdmin: SignerWithAddress;
@@ -38,7 +36,6 @@ contract('TradeFactory', () => {
   const offeredByOTC = utils.parseEther('59');
 
   const maxSlippage = 10_000; // 1%
-  const INITIAL_LIQUIDITY = utils.parseEther('100000');
 
   before('create fixture loader', async () => {
     [

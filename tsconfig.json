@@ -17,6 +17,7 @@
       "@utils/*": ["utils/*"],
       "@test-utils": ["test/utils/index"],
       "@test-utils/*": ["test/utils/*"],
+      "@scripts/*": ["scripts/*"],
       "@e2e/*": ["test/e2e/*"],
       "@integration/*": ["test/integration/*"],
       "@unit/*": ["test/unit/*"]
