@@ -3,8 +3,8 @@ import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signers';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
-import { evm, wallet } from '../../utils';
-import { contract, given, then, when } from '../../utils/bdd';
+import { evm, wallet } from '@test-utils';
+import { contract, given, then, when } from '@test-utils/bdd';
 import { constants } from 'ethers';
 
 contract('TradeFactorySwapperHandler', () => {
