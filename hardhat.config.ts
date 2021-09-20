@@ -85,7 +85,8 @@ const config: HardhatUserConfig = {
   gasReporter: {
     currency: process.env.COINMARKETCAP_DEFAULT_CURRENCY || 'USD',
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
-    enabled: process.env.REPORT_GAS ? true : false,
+    enabled: true,
+    outputFile: 'gasReporterOutput.json',
   },
   preprocess: {
     eachLine: removeConsoleLog((hre) => hre.network.name !== 'hardhat'),
