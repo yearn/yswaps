@@ -8,6 +8,9 @@ import '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
 
 import '@lbertenasco/contract-utils/contracts/utils/Machinery.sol';
 
+import '../swappers/async/AsyncSwapper.sol';
+import '../swappers/sync/SyncSwapper.sol';
+
 import '../OTCPool.sol';
 
 import './TradeFactoryPositionsHandler.sol';
@@ -56,6 +59,7 @@ interface ITradeFactoryExecutor {
   function execute(
     uint256 _id,
     address _swapper,
+    uint256 _minAmountOut,
     bytes calldata _data
   ) external returns (uint256 _receivedAmount);
 
@@ -91,7 +95,7 @@ abstract contract TradeFactoryExecutor is ITradeFactoryExecutor, TradeFactoryPos
     if (_amountIn == 0) revert CommonErrors.ZeroAmount();
     if (_maxSlippage == 0) revert CommonErrors.ZeroSlippage();
     IERC20(_tokenIn).safeTransferFrom(msg.sender, _swapper, _amountIn);
-    _receivedAmount = ISwapper(_swapper).swap(msg.sender, _tokenIn, _tokenOut, _amountIn, _maxSlippage, _data);
+    _receivedAmount = ISyncSwapper(_swapper).swap(msg.sender, _tokenIn, _tokenOut, _amountIn, _maxSlippage, _data);
     emit SyncTradeExecuted(msg.sender, _swapper, _tokenIn, _tokenOut, _amountIn, _maxSlippage, _data, _receivedAmount);
   }
 
@@ -99,6 +103,7 @@ abstract contract TradeFactoryExecutor is ITradeFactoryExecutor, TradeFactoryPos
   function execute(
     uint256 _id,
     address _swapper,
+    uint256 _minAmountOut,
     bytes calldata _data
   ) external override onlyMechanic returns (uint256 _receivedAmount) {
     if (!_pendingTradesIds.contains(_id)) revert InvalidTrade();
@@ -106,7 +111,7 @@ abstract contract TradeFactoryExecutor is ITradeFactoryExecutor, TradeFactoryPos
     if (block.timestamp > _trade._deadline) revert ExpiredTrade();
     if (!_swappers.contains(_swapper)) revert InvalidSwapper();
     IERC20(_trade._tokenIn).safeTransferFrom(_trade._strategy, _swapper, _trade._amountIn);
-    _receivedAmount = ISwapper(_swapper).swap(_trade._strategy, _trade._tokenIn, _trade._tokenOut, _trade._amountIn, _trade._maxSlippage, _data);
+    _receivedAmount = IAsyncSwapper(_swapper).swap(_trade._strategy, _trade._tokenIn, _trade._tokenOut, _trade._amountIn, _minAmountOut, _data);
     _removePendingTrade(_trade._strategy, _id);
     emit AsyncTradeExecuted(_id, _receivedAmount);
   }
