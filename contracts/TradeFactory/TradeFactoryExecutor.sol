@@ -64,6 +64,15 @@ interface ITradeFactoryExecutor {
   ) external returns (uint256 _receivedAmount);
 
   function expire(uint256 _id) external returns (uint256 _freedAmount);
+
+  function execute(uint256[] calldata _ids, uint256 _rateTokenInToOut) external;
+
+  function execute(
+    uint256 _firstTradeId,
+    uint256 _secondTradeId,
+    uint256 _consumedFirstTrade,
+    uint256 _consumedSecondTrade
+  ) external;
 }
 
 abstract contract TradeFactoryExecutor is ITradeFactoryExecutor, TradeFactoryPositionsHandler, Machinery {
@@ -130,7 +139,7 @@ abstract contract TradeFactoryExecutor is ITradeFactoryExecutor, TradeFactoryPos
     emit AsyncTradeExpired(_id);
   }
 
-  function execute(uint256[] calldata _ids, uint256 _rateTokenInToOut) external onlyMechanic {
+  function execute(uint256[] calldata _ids, uint256 _rateTokenInToOut) external override onlyMechanic {
     if (_rateTokenInToOut == 0) revert ZeroRate();
     address _tokenIn = pendingTradesById[_ids[0]]._tokenIn;
     address _tokenOut = pendingTradesById[_ids[0]]._tokenOut;
@@ -153,7 +162,7 @@ abstract contract TradeFactoryExecutor is ITradeFactoryExecutor, TradeFactoryPos
     uint256 _secondTradeId,
     uint256 _consumedFirstTrade,
     uint256 _consumedSecondTrade
-  ) external onlyRole(TRADES_SETTLER) returns (uint256 _receivedAmountAnchorTrade, uint256 _receivedAmountAgainstTrade) {
+  ) external override onlyRole(TRADES_SETTLER) {
     Trade storage _firstTrade = pendingTradesById[_firstTradeId];
     Trade storage _secondTrade = pendingTradesById[_secondTradeId];
     if (_firstTrade._tokenIn != _secondTrade._tokenOut || _firstTrade._tokenOut != _secondTrade._tokenIn) revert InvalidTrade();

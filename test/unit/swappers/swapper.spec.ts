@@ -17,7 +17,7 @@ contract('Swapper', () => {
 
   before(async () => {
     [governor, tradeFactory] = await ethers.getSigners();
-    swapperFactory = await ethers.getContractFactory<SwapperMock__factory>('contracts/mock/Swapper.sol:SwapperMock');
+    swapperFactory = await ethers.getContractFactory<SwapperMock__factory>('contracts/mock/swappers/Swapper.sol:SwapperMock');
     swapper = await swapperFactory.deploy(governor.address, tradeFactory.address);
     snapshotId = await evm.snapshot.take();
   });

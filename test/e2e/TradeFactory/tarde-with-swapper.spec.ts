@@ -9,7 +9,7 @@ import { expect } from 'chai';
 import uniswapLibrary from '../../../scripts/libraries/uniswap-v2';
 import { IERC20, TradeFactory } from '@typechained';
 
-contract.only('TradeFactory', () => {
+contract('TradeFactory', () => {
   let masterAdmin: SignerWithAddress;
   let mechanic: SignerWithAddress;
   let strategy: SignerWithAddress;

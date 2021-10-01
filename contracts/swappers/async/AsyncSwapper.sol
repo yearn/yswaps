@@ -30,7 +30,7 @@ abstract contract AsyncSwapper is IAsyncSwapper, Swapper {
   // solhint-disable-next-line var-name-mixedcase
   SwapperType public constant override SWAPPER_TYPE = SwapperType.ASYNC;
 
-  constructor(address _governor, address _tradeFactory) Swapper(_tradeFactory) Governable(_governor) {}
+  constructor(address _governor, address _tradeFactory) Governable(_governor) Swapper(_tradeFactory) {}
 
   function _assertPreSwap(
     address _receiver,

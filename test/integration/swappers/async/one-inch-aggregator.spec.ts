@@ -84,7 +84,7 @@ describe('OneInchAggregator', function () {
       beforeEach(async () => {
         await tradeFactory
           .connect(yMech)
-          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, oneInchApiResponse.toTokenAmount, oneInchApiResponse.tx.data, {
+          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, oneInchApiResponse.minAmountOut!, oneInchApiResponse.tx.data, {
             gasLimit: GAS_LIMIT + GAS_LIMIT * 0.25,
           });
       });
@@ -163,7 +163,7 @@ describe('OneInchAggregator', function () {
       beforeEach(async () => {
         await tradeFactory
           .connect(yMech)
-          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, oneInchApiResponse.toTokenAmount, oneInchApiResponse.tx.data, {
+          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, oneInchApiResponse.minAmountOut!, oneInchApiResponse.tx.data, {
             gasLimit: GAS_LIMIT + GAS_LIMIT * 0.25,
           });
       });

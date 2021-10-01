@@ -34,7 +34,7 @@ abstract contract SyncSwapper is ISyncSwapper, Swapper {
   // solhint-disable-next-line var-name-mixedcase
   SwapperType public constant override SWAPPER_TYPE = SwapperType.SYNC;
 
-  constructor(address _governor, address _tradeFactory) Swapper(_tradeFactory) Governable(_governor) {}
+  constructor(address _governor, address _tradeFactory) Governable(_governor) Swapper(_tradeFactory) {}
 
   function _assertPreSwap(
     address _receiver,

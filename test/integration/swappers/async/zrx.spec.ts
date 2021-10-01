@@ -46,7 +46,7 @@ describe('ZRX', function () {
         sellToken: CRV_ADDRESS,
         buyToken: DAI_ADDRESS,
         sellAmount: AMOUNT_IN,
-        sippagePercentage: 5,
+        slippagePercentage: 0.05,
       });
 
       ({
@@ -77,7 +77,7 @@ describe('ZRX', function () {
       beforeEach(async () => {
         await tradeFactory
           .connect(yMech)
-          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, zrxAPIResponse.buyAmount, zrxAPIResponse.data);
+          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, zrxAPIResponse.minAmountOut!, zrxAPIResponse.data);
       });
 
       then('CRV gets taken from strategy', async () => {
@@ -103,7 +103,7 @@ describe('ZRX', function () {
 
     let zrxAPIResponse: QuoteResponse;
 
-    const AMOUNT_IN = utils.parseEther('10000');
+    const AMOUNT_IN = utils.parseEther('1000');
 
     before(async () => {
       strategy = await wallet.generateRandom();
@@ -117,7 +117,7 @@ describe('ZRX', function () {
         sellToken: WMATIC_ADDRESS,
         buyToken: DAI_ADDRESS,
         sellAmount: AMOUNT_IN,
-        sippagePercentage: 5,
+        slippagePercentage: 0.05,
       });
 
       ({
@@ -148,7 +148,7 @@ describe('ZRX', function () {
       beforeEach(async () => {
         await tradeFactory
           .connect(yMech)
-          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, zrxAPIResponse.buyAmount, zrxAPIResponse.data);
+          ['execute(uint256,address,uint256,bytes)'](1, swapper.address, zrxAPIResponse.minAmountOut!, zrxAPIResponse.data);
       });
 
       then('WMATIC gets taken from strategy and DAI gets airdropped to strategy', async () => {
