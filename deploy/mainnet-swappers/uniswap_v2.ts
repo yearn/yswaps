@@ -12,7 +12,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const tradeFactory = await hre.deployments.get('TradeFactory');
 
   const asyncDeploy = await hre.deployments.deploy('AsyncUniswapV2', {
-    contract: 'contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, UNISWAP_V2_FACTORY, UNISWAP_V2_ROUTER],
     log: true,
@@ -26,7 +26,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 
   const syncDeploy = await hre.deployments.deploy('SyncUniswapV2', {
-    contract: 'contracts/swappers/sync/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/sync/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, WETH, UNISWAP_V2_FACTORY, UNISWAP_V2_ROUTER],
     log: true,

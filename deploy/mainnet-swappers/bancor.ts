@@ -12,7 +12,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const tradeFactory = await hre.deployments.get('TradeFactory');
 
   const asyncDeploy = await hre.deployments.deploy('AsyncBancor', {
-    contract: 'contracts/swappers/async/BancorSwapper.sol:BancorSwapper',
+    contract: 'solidity/contracts/swappers/async/BancorSwapper.sol:BancorSwapper',
     from: deployer,
     args: [governor, tradeFactory.address, CONTRACT_REGISTRY, BANCOR_NETWORK_NAME],
     log: true,
@@ -26,7 +26,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 
   const syncDeploy = await hre.deployments.deploy('SyncBancor', {
-    contract: 'contracts/swappers/sync/BancorSwapper.sol:BancorSwapper',
+    contract: 'solidity/contracts/swappers/sync/BancorSwapper.sol:BancorSwapper',
     from: deployer,
     args: [governor, tradeFactory.address, CONTRACT_REGISTRY, BANCOR_NETWORK_NAME],
     log: true,

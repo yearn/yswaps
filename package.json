@@ -96,6 +96,7 @@
     "@types/mocha": "9.1.0",
     "@types/node": "16.11.26",
     "aws-sdk": "2.1093.0",
+    "axios-retry": "3.2.4",
     "chai": "4.3.6",
     "chai-as-promised": "7.1.1",
     "cross-env": "7.0.3",

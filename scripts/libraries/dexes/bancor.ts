@@ -3,7 +3,7 @@ import { BlockchainType } from '@bancor/sdk/dist/types';
 import { BigNumber } from '@ethersproject/bignumber';
 import { abi as IERC20MetadataABI } from '@artifacts/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol/IERC20Metadata.json';
 import { IERC20Metadata } from '@typechained';
-import { getNodeUrl } from '@utils/network';
+import { getNodeUrl } from '@utils/env';
 import { utils } from 'ethers';
 import { ethers } from 'hardhat';
 
@@ -23,7 +23,7 @@ export type SwapResponse = {
 
 export const swap = async ({ tokenIn, tokenOut, amountIn, slippage }: SwapParams): Promise<SwapResponse> => {
   const bancorSDK = await BancorSDK.create({
-    ethereumNodeEndpoint: getNodeUrl('mainnet'),
+    ethereumNodeEndpoint: getNodeUrl('ethereum'),
   });
   const pathAndRate = await bancorSDK.pricing.getPathAndRate(
     {

@@ -53,7 +53,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const chainId = await getChainId(hre);
 
   const deploy = await hre.deployments.deploy('TradeFactory', {
-    contract: 'contracts/TradeFactory/TradeFactory.sol:TradeFactory',
+    contract: 'solidity/contracts/TradeFactory/TradeFactory.sol:TradeFactory',
     from: deployer,
     args: [MASTER_ADMIN[chainId], SWAPPER_ADDER[chainId], SWAPPER_SETTER[chainId], STRATEGY_MODIFIER[chainId], MECHANICS_REGISTRY[chainId]],
     log: true,

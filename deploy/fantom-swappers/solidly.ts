@@ -13,7 +13,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const tradeFactory = await hre.deployments.get('TradeFactory');
 
   const asyncDeploy = await hre.deployments.deploy('AsyncSolidly', {
-    contract: 'contracts/swappers/async/SolidlySwapper.sol:SolidlySwapper',
+    contract: 'solidity/contracts/swappers/async/SolidlySwapper.sol:SolidlySwapper',
     from: deployer,
     args: [governor, tradeFactory.address, SOLIDLY_ROUTER],
     log: true,
@@ -27,7 +27,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 
   //   const syncDeploy = await hre.deployments.deploy('SyncSolidly', {
-  //     contract: 'contracts/swappers/sync/UniswapV2AnchorSwapper.sol:UniswapV2AnchorSwapper',
+  //     contract: 'solidity/contracts/swappers/sync/UniswapV2AnchorSwapper.sol:UniswapV2AnchorSwapper',
   //     from: deployer,
   //     args: [governor, tradeFactory.address, WETH, WFTM, SPIRITSWAP_FACTORY, SPIRITSWAP_ROUTER],
   //     log: true,

@@ -110,7 +110,7 @@ export const multiCallOptimizedSwapperFixture = async (
 ): Promise<MultiCallOptimizedSwapperFixture> => {
   const { tradeFactory } = await tradeFactoryFixture(masterAdmin, swapperAdder, swapperSetter, strategyModifier, mechanicsRegistry);
   const multiCallOptimizedAsyncSwapperFactory = await ethers.getContractFactory(
-    'contracts/swappers/async/MultiCallOptimizedSwapper.sol:MultiCallOptimizedSwapper'
+    'solidity/contracts/swappers/async/MultiCallOptimizedSwapper.sol:MultiCallOptimizedSwapper'
   );
   const multiCallOptimizedAsyncSwapper = await multiCallOptimizedAsyncSwapperFactory.deploy(masterAdmin, tradeFactory.address);
   return {

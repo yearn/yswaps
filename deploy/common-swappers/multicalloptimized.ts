@@ -8,7 +8,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const tradeFactory = await hre.deployments.get('TradeFactory');
 
   const asyncDeploy = await hre.deployments.deploy('MultiCallOptimizedSwapper', {
-    contract: 'contracts/swappers/async/MultiCallOptimizedSwapper.sol:MultiCallOptimizedSwapper',
+    contract: 'solidity/contracts/swappers/async/MultiCallOptimizedSwapper.sol:MultiCallOptimizedSwapper',
     from: deployer,
     args: [governor, tradeFactory.address],
     log: true,

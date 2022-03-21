@@ -8,7 +8,7 @@ import uniswapLibrary from '../../../scripts/libraries/dexes/uniswap-v2';
 import { ERC20ForTest, TradeFactory } from '@typechained';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-contract('TradeFactory', () => {
+contract.skip('TradeFactory', () => {
   let masterAdmin: SignerWithAddress;
   let mechanic: SignerWithAddress;
   let strategy: SignerWithAddress;

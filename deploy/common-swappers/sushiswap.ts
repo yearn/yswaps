@@ -31,7 +31,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const chainId = await getChainId(hre);
 
   const asyncDeploy = await hre.deployments.deploy('AsyncSushiswap', {
-    contract: 'contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, SUSHISWAP_FACTORY[chainId], SUSHISWAP_ROUTER[chainId]],
     log: true,
@@ -45,7 +45,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 
   const syncDeploy = await hre.deployments.deploy('SyncSushiswap', {
-    contract: 'contracts/swappers/sync/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/sync/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, WETH[chainId], SUSHISWAP_FACTORY[chainId], SUSHISWAP_ROUTER[chainId]],
     log: true,
