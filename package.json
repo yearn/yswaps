@@ -1,7 +1,7 @@
 {
   "name": "@yearn/yswaps",
   "version": "0.2.0",
-  "description": "Hardhat boilerplate",
+  "description": "YSwaps will swap enabled strategie's funds from harvests",
   "keywords": [
     "ethereum",
     "smart",
@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/yearn/yswaps"
   },
+  "license": "GNU V3",
   "contributors": [
     {
       "name": "Luciano Bertenasco",
@@ -74,7 +75,10 @@
     "eth-gas-reporter/colors": "1.4.0"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "4.5.0"
+    "@bancor/sdk": "0.2.10",
+    "@openzeppelin/contracts": "4.3.2",
+    "@uniswap/v2-core": "1.0.1",
+    "@uniswap/v2-periphery": "1.1.0-beta.0"
   },
   "devDependencies": {
     "@codechecks/client": "0.1.12",
@@ -93,8 +97,6 @@
     "@types/lodash": "4.14.180",
     "@types/mocha": "9.1.0",
     "@types/node": "16.11.26",
-    "@uniswap/v2-core": "1.0.1",
-    "@uniswap/v2-periphery": "1.1.0-beta.0",
     "aws-sdk": "2.1093.0",
     "chai": "4.3.6",
     "chai-as-promised": "7.1.1",
@@ -114,6 +116,7 @@
     "pinst": "3.0.0",
     "prettier": "2.5.1",
     "prettier-plugin-solidity": "1.0.0-beta.19",
+    "qs": "6.10.1",
     "solc-0.8": "npm:solc@0.8.12",
     "solhint": "3.3.7",
     "solhint-plugin-prettier": "0.0.5",
@@ -128,5 +131,8 @@
   },
   "engines": {
     "node": "^16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
