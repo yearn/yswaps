@@ -1,5 +1,5 @@
 {
-  "name": "@yearn/yswaps",
+  "name": "@yearn-contracts/yswaps",
   "version": "0.2.0",
   "description": "YSwaps will swap enabled strategie's funds from harvests",
   "keywords": [
@@ -76,7 +76,7 @@
     "@openzeppelin/contracts": "4.3.2",
     "@uniswap/v2-core": "1.0.1",
     "@uniswap/v2-periphery": "1.1.0-beta.0",
-    "@yearn-mechanics/contract-utils": "0.1.0"
+    "@yearn-mechanics/contract-utils": "0.1.2"
   },
   "devDependencies": {
     "@codechecks/client": "0.1.12",
