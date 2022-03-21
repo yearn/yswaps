@@ -1,5 +1,5 @@
 {
-  "name": "@yearn-contracts/yswaps",
+  "name": "@yearn-mechanics/yswaps",
   "version": "0.2.0",
   "description": "YSwaps will swap enabled strategie's funds from harvests",
   "keywords": [
@@ -41,6 +41,7 @@
     "LICENSE"
   ],
   "scripts": {
+    "_postinstall": "husky install && yarn compile:test",
     "compile": "eth-sdk && hardhat compile",
     "compile:test": "cross-env TEST=true hardhat compile",
     "coverage": "hardhat coverage",
@@ -51,7 +52,6 @@
     "docs": "solidity-docgen --solc-module solc-0.8",
     "fork:node": "cross-env FORK=true hardhat node",
     "fork:script": "cross-env FORK=true hardhat run",
-    "postinstall": "husky install && yarn compile:test",
     "lint:check": "cross-env solhint 'contracts/**/*.sol' 'interfaces/**/*.sol' && cross-env prettier --check './**'",
     "lint:fix": "sort-package-json && cross-env prettier --write './**' && cross-env solhint --fix 'contracts/**/*.sol' 'interfaces/**/*.sol'",
     "prepare": "husky install",
