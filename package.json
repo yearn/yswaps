@@ -1,6 +1,6 @@
 {
-  "name": "hardhat-boilerplate",
-  "version": "1.1.0",
+  "name": "@yearn/yswaps",
+  "version": "0.2.0",
   "description": "Hardhat boilerplate",
   "keywords": [
     "ethereum",
@@ -9,24 +9,22 @@
     "test",
     "solidity",
     "hardhat",
-    "boilerplate"
+    "swaps",
+    "yearn"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/defi-wonderland/hardhat-boilerplate-ts.git"
+    "url": "git+https://github.com/yearn/yswaps"
   },
   "contributors": [
     {
-      "name": "404skillz",
-      "url": "https://github.com/404skillz"
+      "name": "Luciano Bertenasco",
+      "url": "https://github.com/lbertenasco"
     },
     {
-      "name": "0xGorilla",
-      "url": "https://github.com/0xGorilla"
-    },
-    {
-      "name": "wei3erHase",
-      "url": "https://github.com/wei3erHase"
+      "name": "b0dhidharma",
+      "email": "b0dhidharma@protonmail.com",
+      "url": "https://github.com/b0dhidharma"
     }
   ],
   "files": [
