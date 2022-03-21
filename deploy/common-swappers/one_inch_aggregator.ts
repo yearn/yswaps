@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
-import { getChainId, shouldVerifyContract } from '../../utils/deploy';
+import { getChainId, shouldVerifyContract } from '@utils/deploy';
 
 export const ONE_INCH: { [chainId: string]: string } = {
   // Mainnet
@@ -17,7 +17,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const chainId = await getChainId(hre);
 
   const deploy = await hre.deployments.deploy('OneInchAggregator', {
-    contract: 'contracts/swappers/async/OneInchAggregatorSwapper.sol:OneInchAggregatorSwapper',
+    contract: 'solidity/contracts/swappers/async/OneInchAggregatorSwapper.sol:OneInchAggregatorSwapper',
     from: deployer,
     args: [governor, tradeFactory.address, ONE_INCH[chainId]],
     log: true,

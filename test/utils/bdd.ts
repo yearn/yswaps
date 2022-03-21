@@ -1,7 +1,7 @@
 import { Suite, SuiteFunction } from 'mocha';
 
-export const contract = describe;
 export const then = it;
+export const contract = describe;
 export const given = beforeEach;
 export const when: SuiteFunction = <SuiteFunction>function (title: string, fn: (this: Suite) => void) {
   context('when ' + title, fn);

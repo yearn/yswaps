@@ -1,26 +1,26 @@
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signers';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 import { expect } from 'chai';
 import { ethers } from 'hardhat';
 import { evm, wallet } from '@test-utils';
 import { contract, given, then, when } from '@test-utils/bdd';
 import { constants } from 'ethers';
-import { TradeFactorySwapperHandlerMock, TradeFactorySwapperHandlerMock__factory } from '@typechained';
+import { TradeFactorySwapperHandlerForTest, TradeFactorySwapperHandlerForTest__factory } from '@typechained';
 
-contract('TradeFactorySwapperHandler', () => {
+contract.skip('TradeFactorySwapperHandler', () => {
   let masterAdmin: SignerWithAddress;
   let swapperAdder: SignerWithAddress;
   let swapperSetter: SignerWithAddress;
 
-  let tradeFactoryFactory: TradeFactorySwapperHandlerMock__factory;
-  let tradeFactory: TradeFactorySwapperHandlerMock;
+  let tradeFactoryFactory: TradeFactorySwapperHandlerForTest__factory;
+  let tradeFactory: TradeFactorySwapperHandlerForTest;
 
   let snapshotId: string;
 
   before(async () => {
     [masterAdmin, swapperAdder, swapperSetter] = await ethers.getSigners();
-    tradeFactoryFactory = await ethers.getContractFactory<TradeFactorySwapperHandlerMock__factory>(
-      'contracts/mock/TradeFactory/TradeFactorySwapperHandler.sol:TradeFactorySwapperHandlerMock'
+    tradeFactoryFactory = await ethers.getContractFactory<TradeFactorySwapperHandlerForTest__factory>(
+      'solidity/contracts/for-test/TradeFactory/TradeFactorySwapperHandler.sol:TradeFactorySwapperHandlerForTest'
     );
     tradeFactory = await tradeFactoryFactory.deploy(masterAdmin.address, swapperAdder.address, swapperSetter.address);
     snapshotId = await evm.snapshot.take();
@@ -105,28 +105,6 @@ contract('TradeFactorySwapperHandler', () => {
     });
     when('there are strategies assigned to swapper', () => {
       then('returns array of strategies');
-    });
-  });
-
-  describe('setStrategyPermissions', () => {
-    // ONLY SWAPPER SETTER
-    when('strategy is zero address', () => {
-      then('tx is reverted with message');
-    });
-    when('arguments are valid', () => {
-      then('sets strategy permissions');
-      then('emits event');
-    });
-  });
-
-  describe('setOTCPool', () => {
-    // ONLY MASTER ADMIN
-    when('otc pool is zero address', () => {
-      then('tx is reverted with message');
-    });
-    when('arguments are valid', () => {
-      then('sets otc pool');
-      then('emits event');
     });
   });
 

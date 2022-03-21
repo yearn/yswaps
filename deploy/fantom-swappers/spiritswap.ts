@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
-import { shouldVerifyContract } from '../../utils/deploy';
+import { shouldVerifyContract } from '@utils/deploy';
 
 export const SPIRITSWAP_FACTORY = '0xef45d134b73241eda7703fa787148d9c9f4950b0';
 export const SPIRITSWAP_ROUTER = '0x16327e3fbdaca3bcf7e38f5af2599d2ddc33ae52';
@@ -13,7 +13,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const tradeFactory = await hre.deployments.get('TradeFactory');
 
   const asyncDeploy = await hre.deployments.deploy('AsyncSpiritswap', {
-    contract: 'contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, SPIRITSWAP_FACTORY, SPIRITSWAP_ROUTER],
     log: true,
@@ -27,7 +27,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 
   const syncDeploy = await hre.deployments.deploy('SyncSpiritswap', {
-    contract: 'contracts/swappers/sync/UniswapV2AnchorSwapper.sol:UniswapV2AnchorSwapper',
+    contract: 'solidity/contracts/swappers/sync/UniswapV2AnchorSwapper.sol:UniswapV2AnchorSwapper',
     from: deployer,
     args: [governor, tradeFactory.address, WETH, WFTM, SPIRITSWAP_FACTORY, SPIRITSWAP_ROUTER],
     log: true,

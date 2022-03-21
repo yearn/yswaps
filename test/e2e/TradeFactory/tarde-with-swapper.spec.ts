@@ -1,31 +1,26 @@
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signers';
-import { TransactionResponse } from '@ethersproject/abstract-provider';
-import { BigNumber, constants, Contract, utils, Wallet } from 'ethers';
+import { BigNumber, constants, Contract, utils } from 'ethers';
 import { ethers } from 'hardhat';
-import moment from 'moment';
-import { contracts, erc20, evm, fixtures, uniswap } from '@test-utils';
-import { contract, given, then, when } from '@test-utils/bdd';
+import { erc20, evm, uniswap } from '@test-utils';
+import * as fixtures from '../../fixtures';
+import { contract, given, then } from '@test-utils/bdd';
 import { expect } from 'chai';
-import uniswapLibrary from '../../../scripts/libraries/uniswap-v2';
-import { IERC20, TradeFactory } from '@typechained';
+import uniswapLibrary from '../../../scripts/libraries/dexes/uniswap-v2';
+import { ERC20ForTest, TradeFactory } from '@typechained';
+import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
-contract('TradeFactory', () => {
+contract.skip('TradeFactory', () => {
   let masterAdmin: SignerWithAddress;
   let mechanic: SignerWithAddress;
   let strategy: SignerWithAddress;
   let hodler: SignerWithAddress;
   let swapperAdder: SignerWithAddress;
   let swapperSetter: SignerWithAddress;
-  let strategyAdder: SignerWithAddress;
-  let tradeModifier: SignerWithAddress;
-  let tradeSettler: SignerWithAddress;
-  let otcPoolGovernor: SignerWithAddress;
+  let strategyModifier: SignerWithAddress;
 
-  let tokenIn: IERC20;
-  let tokenOut: IERC20;
+  let tokenIn: ERC20ForTest;
+  let tokenOut: ERC20ForTest;
 
   let mechanicsRegistry: Contract;
-  let machinery: Contract;
   let tradeFactory: TradeFactory;
 
   let uniswapV2Factory: Contract;
@@ -41,34 +36,19 @@ contract('TradeFactory', () => {
   const INITIAL_LIQUIDITY = utils.parseEther('100000');
 
   before('create fixture loader', async () => {
-    [
-      masterAdmin,
-      swapperAdder,
-      swapperSetter,
-      strategyAdder,
-      tradeModifier,
-      tradeSettler,
-      mechanic,
-      strategy,
-      hodler,
-      swapperSetter,
-      otcPoolGovernor,
-    ] = await ethers.getSigners();
+    [masterAdmin, swapperAdder, swapperSetter, strategyModifier, mechanic, strategy, hodler, swapperSetter] = await ethers.getSigners();
 
-    ({ mechanicsRegistry, machinery } = await fixtures.machineryFixture(mechanic.address));
+    ({ mechanicsRegistry } = await fixtures.machineryFixture(mechanic.address));
 
     ({ tradeFactory, uniswapV2AsyncSwapper, uniswapV2SyncSwapper, uniswapV2Factory, uniswapV2Router02 } = await fixtures.uniswapV2SwapperFixture(
       masterAdmin.address,
       swapperAdder.address,
       swapperSetter.address,
-      strategyAdder.address,
-      tradeModifier.address,
-      tradeSettler.address,
-      mechanicsRegistry.address,
-      otcPoolGovernor.address
+      strategyModifier.address,
+      mechanicsRegistry.address
     ));
 
-    await tradeFactory.connect(strategyAdder).grantRole(await tradeFactory.STRATEGY(), strategy.address);
+    await tradeFactory.connect(strategyModifier).grantRole(await tradeFactory.STRATEGY(), strategy.address);
     await tradeFactory.connect(swapperAdder).addSwappers([uniswapV2AsyncSwapper.address]);
     await tradeFactory.connect(swapperAdder).addSwappers([uniswapV2SyncSwapper.address]);
     await tradeFactory.connect(swapperSetter).setStrategySyncSwapper(strategy.address, uniswapV2SyncSwapper.address);
@@ -95,11 +75,14 @@ contract('TradeFactory', () => {
       amountB: INITIAL_LIQUIDITY,
     });
 
+    console.log('post add liquidity');
     uniswapPairAddress = await uniswapV2Factory.getPair(tokenIn.address, tokenOut.address);
 
+    console.log('pre transfer');
     await tokenIn.connect(hodler).transfer(strategy.address, amountIn);
     await tokenIn.connect(strategy).approve(tradeFactory.address, amountIn);
 
+    console.log('say cheese!');
     snapshotId = await evm.snapshot.take();
   });
 
@@ -113,9 +96,15 @@ contract('TradeFactory', () => {
       const data = ethers.utils.defaultAbiCoder.encode([], []);
       // We can do this since ratio is 1 = 1
       minAmountOut = amountIn.sub(amountIn.mul(maxSlippage).div(10000 / 100));
-      await tradeFactory
-        .connect(strategy)
-        ['execute(address,address,uint256,uint256,bytes)'](tokenIn.address, tokenOut.address, amountIn, maxSlippage, data);
+      await tradeFactory.connect(strategy)['execute((address,address,uint256,uint256),bytes)'](
+        {
+          _tokenIn: tokenIn.address,
+          _tokenOut: tokenOut.address,
+          _amountIn: amountIn,
+          _maxSlippage: maxSlippage,
+        },
+        data
+      );
     });
     then('tokens in gets taken from strategy', async () => {
       expect(await tokenIn.balanceOf(strategy.address)).to.equal(0);
@@ -132,7 +121,7 @@ contract('TradeFactory', () => {
   describe('async trade executed', () => {
     let minAmountOut: BigNumber;
     given(async () => {
-      await tradeFactory.connect(strategy).create(tokenIn.address, tokenOut.address, amountIn, moment().add('30', 'minutes').unix());
+      await tradeFactory.connect(strategy).enable(tokenIn.address, tokenOut.address);
       const bestPath = await uniswapLibrary.getBestPathEncoded({
         tokenIn: tokenIn.address,
         tokenOut: tokenOut.address,
@@ -142,9 +131,17 @@ contract('TradeFactory', () => {
       });
       // We can do this since ratio is 1 = 1
       minAmountOut = bestPath.amountOut.sub(bestPath.amountOut.mul(maxSlippage).div(10000).div(100));
-      await tradeFactory
-        .connect(mechanic)
-        ['execute(uint256,address,uint256,bytes)'](1, uniswapV2AsyncSwapper.address, minAmountOut, bestPath.data);
+      await tradeFactory.connect(mechanic)['execute((address,address,address,uint256,uint256),address,bytes)'](
+        {
+          _strategy: strategy.address,
+          _tokenIn: tokenIn.address,
+          _tokenOut: tokenOut.address,
+          _amount: amountIn,
+          _minAmountOut: minAmountOut,
+        },
+        uniswapV2AsyncSwapper.address,
+        bestPath.data
+      );
     });
     then('tokens in gets taken from strategy', async () => {
       expect(await tokenIn.balanceOf(strategy.address)).to.equal(0);

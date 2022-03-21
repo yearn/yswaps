@@ -1,12 +1,10 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
-import { abi as UNISWAP_V2_ROUTER_ABI } from '@uniswap/v2-periphery/build/UniswapV2Router02.json';
-import { ethers } from 'hardhat';
-import { shouldVerifyContract } from '../../utils/deploy';
+import { shouldVerifyContract } from '@utils/deploy';
 
-const UNISWAP_V2_FACTORY = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f';
-const UNISWAP_V2_ROUTER = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d';
-const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
+export const UNISWAP_V2_FACTORY = '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f';
+export const UNISWAP_V2_ROUTER = '0x7a250d5630b4cf539739df2c5dacb4c659f2488d';
+export const WETH = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
 
 const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer, governor } = await hre.getNamedAccounts();
@@ -14,7 +12,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const tradeFactory = await hre.deployments.get('TradeFactory');
 
   const asyncDeploy = await hre.deployments.deploy('AsyncUniswapV2', {
-    contract: 'contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, UNISWAP_V2_FACTORY, UNISWAP_V2_ROUTER],
     log: true,
@@ -28,7 +26,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 
   const syncDeploy = await hre.deployments.deploy('SyncUniswapV2', {
-    contract: 'contracts/swappers/sync/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/sync/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, WETH, UNISWAP_V2_FACTORY, UNISWAP_V2_ROUTER],
     log: true,

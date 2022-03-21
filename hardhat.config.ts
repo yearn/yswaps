@@ -9,52 +9,43 @@ import 'hardhat-gas-reporter';
 import 'hardhat-deploy';
 import 'solidity-coverage';
 import { HardhatUserConfig, MultiSolcUserConfig, NetworksUserConfig } from 'hardhat/types';
-import { DEFAULT_ACCOUNT, getNodeUrl } from './utils/network';
+import * as env from './utils/env';
 import 'tsconfig-paths/register';
 
-const networks: NetworksUserConfig = process.env.TEST
-  ? {}
-  : {
-      hardhat: {
-        forking: {
-          enabled: process.env.FORK ? true : false,
-          url: getNodeUrl('fantom'),
+const networks: NetworksUserConfig =
+  env.isHardhatCompile() || env.isHardhatClean() || env.isTesting()
+    ? {}
+    : {
+        hardhat: {
+          forking: {
+            enabled: process.env.FORK ? true : false,
+            url: env.getNodeUrl('ethereum'),
+          },
         },
-      },
-      localhost: {
-        url: getNodeUrl('localhost'),
-        live: false,
-        accounts: [(process.env.LOCAL_MAINNET_PRIVATE_KEY as string) || DEFAULT_ACCOUNT],
-        tags: ['local'],
-      },
-      mainnet: {
-        url: getNodeUrl('mainnet'),
-        accounts: [(process.env.MAINNET_PRIVATE_KEY as string) || DEFAULT_ACCOUNT],
-        gasPrice: 'auto',
-        tags: ['production'],
-      },
-      polygon: {
-        url: getNodeUrl('polygon'),
-        accounts: [(process.env.POLYGON_PRIVATE_KEY as string) || DEFAULT_ACCOUNT],
-        tags: ['production'],
-      },
-      fantom: {
-        url: getNodeUrl('fantom'),
-        accounts: [(process.env.FANTOM_PRIVATE_KEY as string) || DEFAULT_ACCOUNT],
-        tags: ['production'],
-      },
-    };
+        fantom: {
+          url: env.getNodeUrl('fantom'),
+          accounts: env.getAccounts('fantom'),
+        },
+        polygon: {
+          url: env.getNodeUrl('polygon'),
+          accounts: env.getAccounts('polygon'),
+        },
+        ethereum: {
+          url: env.getNodeUrl('ethereum'),
+          accounts: env.getAccounts('ethereum'),
+        },
+      };
 
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   namedAccounts: {
-    deployer: 0, // yMECH Alejo
+    deployer: 0, // yMECH Alice
     governor: {
-      default: 0, // yMECH Alejo
+      default: 0, // yMECH Alice
       1: '0xfeb4acf3df3cdea7399794d0869ef76a6efaff52', // ychad
       250: '0x9f2A061d6fEF20ad3A656e23fd9C814b75fd5803', // ymechs msig
     },
-    yMech: '0xB82193725471dC7bfaAB1a3AB93c7b42963F3265', // yMECH Alejo
+    yMech: '0xB82193725471dC7bfaAB1a3AB93c7b42963F3265', // yMECH b0dhi
   },
   mocha: {
     timeout: process.env.MOCHA_TIMEOUT || 300000,
@@ -63,11 +54,11 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: '0.8.7',
+        version: '0.8.9',
         settings: {
           optimizer: {
             enabled: true,
-            runs: 9999,
+            runs: 200,
           },
         },
       },
@@ -76,7 +67,7 @@ const config: HardhatUserConfig = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 9999,
+            runs: 200,
           },
         },
       },
@@ -85,18 +76,22 @@ const config: HardhatUserConfig = {
   gasReporter: {
     currency: process.env.COINMARKETCAP_DEFAULT_CURRENCY || 'USD',
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
-    enabled: true,
-    outputFile: 'gasReporterOutput.json',
+    enabled: process.env.REPORT_GAS ? true : false,
+    showMethodSig: true,
+    onlyCalledMethods: false,
   },
   preprocess: {
     eachLine: removeConsoleLog((hre) => hre.network.name !== 'hardhat'),
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
+    apiKey: env.getEtherscanAPIKeys(['ethereum']),
   },
   typechain: {
     outDir: 'typechained',
     target: 'ethers-v5',
+  },
+  paths: {
+    sources: './solidity',
   },
 };
 

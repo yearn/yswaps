@@ -1,14 +1,12 @@
 import { expect } from 'chai';
-import { Contract, utils, Wallet } from 'ethers';
+import { BigNumber, Contract, utils, Wallet } from 'ethers';
 import { ethers } from 'hardhat';
 import { evm, wallet } from '@test-utils';
 import { then, when } from '@test-utils/bdd';
-import { getNodeUrl } from '../../../../utils/network';
-import * as setup from '../setup';
+import { getNodeUrl } from '@utils/env';
 import { IERC20 } from '@typechained';
-
-// We set a fixed block number so tests can cache blockchain state
-const FORK_BLOCK_NUMBER = 16548550;
+import forkBlockNumber from '@integration/fork-block-numbers';
+import * as setup from '../setup';
 
 const MAX_SLIPPAGE = 10_000; // 1%
 const AMOUNT_IN = utils.parseEther('10000');
@@ -34,7 +32,7 @@ describe('Spiritswap', function () {
 
       await evm.reset({
         jsonRpcUrl: getNodeUrl('fantom'),
-        blockNumber: FORK_BLOCK_NUMBER,
+        blockNumber: forkBlockNumber['fantom-swappers'],
       });
 
       ({
@@ -48,7 +46,6 @@ describe('Spiritswap', function () {
         fromTokenAddress: CRV_ADDRESS,
         toTokenAddress: DAI_ADDRESS,
         fromTokenWhaleAddress: CRV_WHALE_ADDRESS,
-        amountIn: AMOUNT_IN,
         strategy,
       }));
 
@@ -61,14 +58,22 @@ describe('Spiritswap', function () {
 
     describe('swap', () => {
       const data = ethers.utils.defaultAbiCoder.encode([], []);
+      let preSwapBalance: BigNumber;
       beforeEach(async () => {
-        await tradeFactory
-          .connect(strategy)
-          ['execute(address,address,uint256,uint256,bytes)'](CRV_ADDRESS, DAI_ADDRESS, AMOUNT_IN, MAX_SLIPPAGE, data);
+        preSwapBalance = await CRV.balanceOf(strategy.address);
+        await tradeFactory.connect(strategy)['execute((address,address,uint256,uint256),bytes)'](
+          {
+            _tokenIn: CRV_ADDRESS,
+            _tokenOut: DAI_ADDRESS,
+            _amountIn: AMOUNT_IN,
+            _maxSlippage: MAX_SLIPPAGE,
+          },
+          data
+        );
       });
 
       then('CRV gets taken from strategy', async () => {
-        expect(await CRV.balanceOf(strategy.address)).to.equal(0);
+        expect(await CRV.balanceOf(strategy.address)).to.equal(preSwapBalance.sub(AMOUNT_IN));
       });
       then('DAI gets airdropped to strategy', async () => {
         expect(await DAI.balanceOf(strategy.address)).to.be.gt(0);

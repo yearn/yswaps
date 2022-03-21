@@ -1,6 +1,6 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
-import { shouldVerifyContract } from '../../utils/deploy';
+import { shouldVerifyContract } from '@utils/deploy';
 
 export const SPOOKYSWAP_FACTORY = '0x152eE697f2E276fA89E96742e9bB9aB1F2E61bE3';
 export const SPOOKYSWAP_ROUTER = '0xF491e7B69E4244ad4002BC14e878a34207E38c29';
@@ -13,7 +13,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const tradeFactory = await hre.deployments.get('TradeFactory');
 
   const asyncDeploy = await hre.deployments.deploy('AsyncSpookyswap', {
-    contract: 'contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
+    contract: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
     from: deployer,
     args: [governor, tradeFactory.address, SPOOKYSWAP_FACTORY, SPOOKYSWAP_ROUTER],
     log: true,
@@ -27,7 +27,7 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 
   const syncDeploy = await hre.deployments.deploy('SyncSpookyswap', {
-    contract: 'contracts/swappers/sync/UniswapV2AnchorSwapper.sol:UniswapV2AnchorSwapper',
+    contract: 'solidity/contracts/swappers/sync/UniswapV2AnchorSwapper.sol:UniswapV2AnchorSwapper',
     from: deployer,
     args: [governor, tradeFactory.address, WETH, WFTM, SPOOKYSWAP_FACTORY, SPOOKYSWAP_ROUTER],
     log: true,
