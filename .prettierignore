@@ -9,6 +9,7 @@
 workspace.code-workspace
 .DS_STORE
 codechecks.yml
+LICENSE
 
 # Hardhat
 coverage
