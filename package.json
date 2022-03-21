@@ -37,7 +37,8 @@
     "deployments",
     "!deployments/localhost",
     "!.env",
-    "!**/.DS_Store"
+    "!**/.DS_Store",
+    "LICENSE"
   ],
   "scripts": {
     "compile": "eth-sdk && hardhat compile",

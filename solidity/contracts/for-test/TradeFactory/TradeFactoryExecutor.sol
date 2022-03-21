@@ -4,12 +4,15 @@ pragma solidity >=0.8.4 <0.9.0;
 import '../../TradeFactory/TradeFactoryExecutor.sol';
 import './TradeFactoryPositionsHandler.sol';
 
-contract TradeFactoryExecutorMock is TradeFactoryPositionsHandlerMock, TradeFactoryExecutor {
+contract TradeFactoryExecutorForTest is TradeFactoryPositionsHandlerForTest, TradeFactoryExecutor {
   constructor(
     address _masterAdmin,
     address _swapperAdder,
     address _swapperSetter,
     address _strategyModifier,
     address _mechanicsRegistry
-  ) TradeFactoryPositionsHandlerMock(_masterAdmin, _swapperAdder, _swapperSetter, _strategyModifier) TradeFactoryExecutor(_mechanicsRegistry) {}
+  )
+    TradeFactoryPositionsHandlerForTest(_masterAdmin, _swapperAdder, _swapperSetter, _strategyModifier)
+    TradeFactoryExecutor(_mechanicsRegistry)
+  {}
 }

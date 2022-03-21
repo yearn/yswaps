@@ -5,7 +5,7 @@ import '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
 
 import '../../TradeFactory/TradeFactorySwapperHandler.sol';
 
-contract TradeFactorySwapperHandlerMock is TradeFactorySwapperHandler {
+contract TradeFactorySwapperHandlerForTest is TradeFactorySwapperHandler {
   using EnumerableSet for EnumerableSet.AddressSet;
 
   constructor(

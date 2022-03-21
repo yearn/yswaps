@@ -3,7 +3,7 @@ pragma solidity >=0.8.4 <0.9.0;
 
 import '../../swappers/sync/SyncSwapper.sol';
 
-contract SyncSwapperMock is SyncSwapper {
+contract SyncSwapperForTest is SyncSwapper {
   constructor(address _governor, address _tradeFactory) SyncSwapper(_governor, _tradeFactory) {}
 
   function _executeSwap(

@@ -3,7 +3,7 @@ pragma solidity >=0.8.4 <0.9.0;
 
 import '../../swappers/async/AsyncSwapper.sol';
 
-contract AsyncSwapperMock is AsyncSwapper {
+contract AsyncSwapperForTest is AsyncSwapper {
   uint256 internal _receivedAmount;
 
   event MyInternalExecuteSwap(address _receiver, address _tokenIn, address _tokenOut, uint256 _amountIn, bytes _data);
