@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.4 <0.9.0;
 
-import '@yearn/contract-utils/solidity/contracts/utils/CollectableDust.sol';
+import '@yearn-mechanics/contract-utils/solidity/contracts/utils/CollectableDust.sol';
 
 import './TradeFactoryPositionsHandler.sol';
 import './TradeFactoryExecutor.sol';

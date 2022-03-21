@@ -8,9 +8,12 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
+      "@artifacts/*": ["artifacts/*"],
+      "@deploy/*": ["deploy/*"],
       "@typechained": ["typechained/index"],
       "@utils": ["test/utils/index"],
-      "@utils/*": ["test/utils/*"],
+      "@test-utils": ["test/utils"],
+      "@test-utils/*": ["test/utils/*"],
       "@e2e/*": ["test/e2e/*"],
       "@unit/*": ["test/unit/*"],
       "@eth-sdk-types": ["node_modules/.dethcrypto/eth-sdk-client/esm/types"]

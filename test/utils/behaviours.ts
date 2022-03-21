@@ -29,7 +29,7 @@ export const checkTxRevertedWithMessage = async ({
 export const checkTxRevertedWithZeroAddress = async (tx: Promise<TransactionResponse>): Promise<void> => {
   await checkTxRevertedWithMessage({
     tx,
-    message: /zero\saddress/,
+    message: /ZeroAddress/,
   });
 };
 
