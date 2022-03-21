@@ -96,4 +96,4 @@ jobs:
         env:
           NODE_URI_ETHEREUM: https://eth-mainnet.alchemyapi.io/v2/${{ secrets.ALCHEMYKEY }}
           NODE_URI_POLYGON: https://polygon-mainnet.g.alchemy.com/v2/${{ secrets.ALCHEMYKEY }}
-          NODE_URI_FANTOM: {{ secrets.FANTOM_RPC }}
+          NODE_URI_FANTOM: ${{ secrets.FANTOM_RPC }}
