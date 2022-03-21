@@ -19,6 +19,9 @@ cache
 typechained
 deployments
 
+# CI
+.github/workflows/*
+
 # JS
 node_modules
 package-lock.json
