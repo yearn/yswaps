@@ -2,7 +2,7 @@
 pragma solidity >=0.8.4 <0.9.0;
 
 import './AsyncSwapper.sol';
-import '../../interfaces/solidly/ISolidlyRouter.sol';
+import '../../../interfaces/solidly/ISolidlyRouter.sol';
 import 'hardhat/console.sol';
 
 interface ISolidlySwapper is IAsyncSwapper {

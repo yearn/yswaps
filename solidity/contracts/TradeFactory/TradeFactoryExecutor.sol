@@ -6,7 +6,7 @@ import '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol';
 import '@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol';
 import '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
 
-import '@yearn/contract-utils/contracts/utils/Machinery.sol';
+import '@yearn/contract-utils/solidity/contracts/utils/Machinery.sol';
 
 import '../swappers/async/AsyncSwapper.sol';
 import '../swappers/async/MultipleAsyncSwapper.sol';
