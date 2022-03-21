@@ -45,13 +45,11 @@ export const addLiquidity = async ({
   token1: Contract;
   amountB: BigNumber;
 }) => {
-  await token0.connect(owner).approve(uniswapV2Router02.address, amountA);
-  await token1.connect(owner).approve(uniswapV2Router02.address, amountB);
-  await uniswapV2Router02
-    .connect(owner)
-    .addLiquidity(token0.address, token1.address, amountA, amountB, amountA, amountB, await owner.getAddress(), deadline, {
-      gasLimit: 9500000,
-    });
+  await token0.approve(uniswapV2Router02.address, amountA);
+  await token1.approve(uniswapV2Router02.address, amountB);
+  await uniswapV2Router02.addLiquidity(token0.address, token1.address, amountA, amountB, amountA, amountB, await owner.getAddress(), deadline, {
+    gasLimit: 9500000,
+  });
 };
 
 export const addLiquidityETH = async ({
@@ -65,11 +63,9 @@ export const addLiquidityETH = async ({
   token0mount: BigNumber;
   wethAmount: BigNumber;
 }) => {
-  await token0.connect(owner).approve(uniswapV2Router02.address, token0mount);
-  await uniswapV2Router02
-    .connect(owner)
-    .addLiquidityETH(token0.address, token0mount, token0mount, wethAmount, await owner.getAddress(), deadline, {
-      gasLimit: 9500000,
-      value: wethAmount,
-    });
+  await token0.approve(uniswapV2Router02.address, token0mount);
+  await uniswapV2Router02.addLiquidityETH(token0.address, token0mount, token0mount, wethAmount, await owner.getAddress(), deadline, {
+    gasLimit: 9500000,
+    value: wethAmount,
+  });
 };

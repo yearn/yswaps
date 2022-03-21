@@ -6,13 +6,18 @@ node_modules
 coverage.json
 coverage
 
+# ETH-SDK
+eth-sdk/abis
+
 # Hardhat files
 cache
 artifacts
 typechained
 deployments/hardhat
 deployments/localhost
-gasReporterOutput.json
 
 # Config files
 .env
+
+# Not ignore gitkeep
+!/**/.gitkeep

@@ -19,7 +19,7 @@ export const getChainId = async (hre: HardhatRuntimeEnvironment): Promise<number
 
 export const getRealChainIdOfFork = (hre: HardhatRuntimeEnvironment): number => {
   const config = hre.network.config as HardhatNetworkUserConfig;
-  if (config.forking?.url.includes('mainnet')) return 1;
+  if (config.forking?.url.includes('eth')) return 1;
   if (config.forking?.url.includes('ftm') || config.forking?.url.includes('fantom')) return 250;
   if (config.forking?.url.includes('polygon')) return 137;
   throw new Error('Should specify chain id of fork');
@@ -27,8 +27,8 @@ export const getRealChainIdOfFork = (hre: HardhatRuntimeEnvironment): number => 
 
 export const shouldVerifyContract = async (deploy: DeployResult): Promise<boolean> => {
   if (process.env.FORK || process.env.TEST) return false;
-  const txReceipt = await ethers.provider.getTransaction(deploy.receipt!.transactionHash);
   if (!deploy.newlyDeployed) return false;
+  const txReceipt = await ethers.provider.getTransaction(deploy.receipt!.transactionHash);
   await txReceipt.wait(10);
   return true;
 };

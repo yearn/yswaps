@@ -6,20 +6,22 @@
 .gitattributes
 .env.example
 .env
-.DS_STORE
 workspace.code-workspace
+.DS_STORE
+codechecks.yml
 
 # Hardhat
-typechained
+coverage
+coverage.json
 artifacts
 cache
+typechained
 deployments
-gasReporterOutput.json
 
 # JS
 node_modules
+package-lock.json
 yarn.lock
 
 # Solidity
 contracts/mock
-*.skip

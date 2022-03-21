@@ -4,25 +4,18 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@artifacts/*": ["artifacts/*"],
-      "@deploy/*": ["deploy/*"],
-      "@typechained": ["typechained"],
-      "@typechained/*": ["typechained/*"],
-      "@utils/*": ["utils/*"],
-      "@test-utils": ["test/utils/index"],
-      "@test-utils/*": ["test/utils/*"],
-      "@scripts/*": ["scripts/*"],
-      "@libraries/*": ["scripts/libraries/*"],
+      "@typechained": ["typechained/index"],
+      "@utils": ["test/utils/index"],
+      "@utils/*": ["test/utils/*"],
       "@e2e/*": ["test/e2e/*"],
-      "@integration/*": ["test/integration/*"],
-      "@unit/*": ["test/unit/*"]
+      "@unit/*": ["test/unit/*"],
+      "@eth-sdk-types": ["node_modules/.dethcrypto/eth-sdk-client/esm/types"]
     }
   },
-  "include": ["hardhat.config.ts", "./scripts", "./deploy", "./test"]
+  "include": ["./scripts", "./deploy", "./test"],
+  "files": ["./hardhat.config.ts"]
 }

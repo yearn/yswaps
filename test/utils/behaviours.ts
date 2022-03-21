@@ -1,13 +1,11 @@
 import { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import chai from 'chai';
-import { constants, Contract, ContractFactory, ContractInterface, Signer, Wallet } from 'ethers';
+import { Contract, ContractFactory, ContractInterface, Signer, Wallet } from 'ethers';
 import { TransactionResponse } from '@ethersproject/abstract-provider';
 import { Provider } from '@ethersproject/providers';
 import { getStatic } from 'ethers/lib/utils';
 import { wallet } from '.';
-import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/dist/src/signers';
-import { when, given, then } from './bdd';
 
 chai.use(chaiAsPromised);
 
@@ -31,7 +29,7 @@ export const checkTxRevertedWithMessage = async ({
 export const checkTxRevertedWithZeroAddress = async (tx: Promise<TransactionResponse>): Promise<void> => {
   await checkTxRevertedWithMessage({
     tx,
-    message: /ZeroAddress/,
+    message: /zero\saddress/,
   });
 };
 
@@ -200,113 +198,6 @@ export const fnShouldOnlyBeCallableByGovernance = (
   function callFunction(impersonator: Impersonator) {
     const argsArray: unknown[] = typeof args === 'function' ? args() : args;
     const fn = delayedContract().connect(impersonator)[fnName] as (...args: unknown[]) => unknown;
-    return fn(...argsArray, { gasPrice: 0 });
+    return fn(...argsArray);
   }
-};
-
-export const shouldBeExecutableOnlyByTradeFactory = ({
-  contract,
-  funcAndSignature,
-  params,
-  tradeFactory,
-}: {
-  contract: () => Contract;
-  funcAndSignature: string;
-  params?: any[];
-  tradeFactory: () => SignerWithAddress | Wallet;
-}) => {
-  params = params ?? [];
-  when('not called from trade factory', () => {
-    let onlyTradeFactoryAllowedTx: Promise<TransactionResponse>;
-    given(async () => {
-      const notGovernor = await wallet.generateRandom();
-      onlyTradeFactoryAllowedTx = contract()
-        .connect(notGovernor)
-        [funcAndSignature](...params!);
-    });
-    then('tx is reverted with reason', async () => {
-      await expect(onlyTradeFactoryAllowedTx).to.be.revertedWith('NotAuthorized()');
-    });
-  });
-  when('called from factory', () => {
-    let onlyTradeFactoryAllowedTx: Promise<TransactionResponse>;
-    given(async () => {
-      onlyTradeFactoryAllowedTx = contract()
-        .connect(tradeFactory())
-        [funcAndSignature](...params!);
-    });
-    then('tx is not reverted or not reverted with reason only trade factory', async () => {
-      await expect(onlyTradeFactoryAllowedTx).to.not.be.revertedWith('NotAuthorized()');
-    });
-  });
-};
-
-export const shouldBeCheckPreAssetSwap = ({ contract, func, withData }: { contract: () => Contract; func: string; withData: boolean }) => {
-  when('receiver is zero address', () => {
-    let tx: Promise<TransactionResponse>;
-    given(async () => {
-      const args = [constants.AddressZero, wallet.generateRandomAddress(), wallet.generateRandomAddress(), constants.One, constants.One];
-      if (withData) args.push('0x');
-      tx = contract()[func](...args);
-    });
-    then('tx is reverted with reason', async () => {
-      await expect(tx).to.be.revertedWith('ZeroAddress()');
-    });
-  });
-  when('token in is zero address', () => {
-    let tx: Promise<TransactionResponse>;
-    given(async () => {
-      const args = [wallet.generateRandomAddress(), constants.AddressZero, wallet.generateRandomAddress(), constants.One, constants.One];
-      if (withData) args.push('0x');
-      tx = contract()[func](...args);
-    });
-    then('tx is reverted with reason', async () => {
-      await expect(tx).to.be.revertedWith('ZeroAddress()');
-    });
-  });
-  when('token out is zero address', () => {
-    let tx: Promise<TransactionResponse>;
-    given(async () => {
-      const args = [wallet.generateRandomAddress(), wallet.generateRandomAddress(), constants.AddressZero, constants.One, constants.One];
-      if (withData) args.push('0x');
-      tx = contract()[func](...args);
-    });
-    then('tx is reverted with reason', async () => {
-      await expect(tx).to.be.revertedWith('ZeroAddress()');
-    });
-  });
-  when('amount is zero', () => {
-    let tx: Promise<TransactionResponse>;
-    given(async () => {
-      const args = [
-        wallet.generateRandomAddress(),
-        wallet.generateRandomAddress(),
-        wallet.generateRandomAddress(),
-        constants.Zero,
-        constants.One,
-      ];
-      if (withData) args.push('0x');
-      tx = contract()[func](...args);
-    });
-    then('tx is reverted with reason', async () => {
-      await expect(tx).to.be.revertedWith('ZeroAmount()');
-    });
-  });
-  when('max slippage is zero', () => {
-    let tx: Promise<TransactionResponse>;
-    given(async () => {
-      const args = [
-        wallet.generateRandomAddress(),
-        wallet.generateRandomAddress(),
-        wallet.generateRandomAddress(),
-        constants.One,
-        constants.Zero,
-      ];
-      if (withData) args.push('0x');
-      tx = contract()[func](...args);
-    });
-    then('tx is reverted with reason', async () => {
-      await expect(tx).to.be.revertedWith('ZeroSlippage()');
-    });
-  });
 };
