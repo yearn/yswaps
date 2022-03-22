@@ -6,7 +6,7 @@ import { contract, given, then } from '@test-utils/bdd';
 import { expect } from 'chai';
 import { ERC20ForTest, TradeFactory } from '@typechained';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
-import { mergeTransactions } from '@scripts/libraries/utils/multicall';
+import { mergeTransactions } from '@scripts/multicall';
 
 contract('MultiCallOptimizedSwapper', () => {
   let masterAdmin: SignerWithAddress;

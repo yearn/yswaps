@@ -6,7 +6,7 @@ import { then, when } from '@test-utils/bdd';
 import { getNodeUrl } from '@utils/env';
 import { IERC20, ISwapper, TradeFactory } from '@typechained';
 import forkBlockNumber from '@integration/fork-block-numbers';
-import solidly, { SwapResponse } from '@scripts/libraries/dexes/solidly';
+import solidly, { SwapResponse } from '@scripts/dexes/solidly';
 import { WETH, SOLIDLY_ROUTER, SOLIDLY_FACTORY } from '@deploy/fantom-swappers/solidly';
 import * as setup from '../setup';
 

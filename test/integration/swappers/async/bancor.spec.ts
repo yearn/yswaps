@@ -5,7 +5,7 @@ import { evm, wallet } from '@test-utils';
 import { then, when } from '@test-utils/bdd';
 import { IERC20, ISwapper, TradeFactory } from '@typechained';
 import forkBlockNumber from '@integration/fork-block-numbers';
-import bancor, { SwapResponse } from '@scripts/libraries/dexes/bancor';
+import bancor, { SwapResponse } from '@scripts/dexes/bancor';
 import * as setup from '../setup';
 import { getNodeUrl } from '@utils/env';
 
