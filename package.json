@@ -1,6 +1,6 @@
 {
   "name": "@yearn-mechanics/yswaps",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "YSwaps will swap enabled strategie's funds from harvests",
   "keywords": [
     "ethereum",
