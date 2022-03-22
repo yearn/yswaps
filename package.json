@@ -28,6 +28,7 @@
       "url": "https://github.com/b0dhidharma"
     }
   ],
+  "type": "commonjs",
   "files": [
     "solidity/contracts",
     "solidity/interfaces",
