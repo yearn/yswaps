@@ -3,7 +3,7 @@ import { DeployFunction } from 'hardhat-deploy/types';
 import { getChainId, shouldVerifyContract } from '@utils/deploy';
 
 export const ZRX: { [chainId: string]: string } = {
-  // Mainnet
+  // Ethereum
   '1': '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
   // Polygon
   '137': '0xdef1c0ded9bec7f1a1670819833240f027b25eff',
@@ -33,5 +33,5 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 };
 deployFunction.dependencies = ['TradeFactory'];
-deployFunction.tags = ['Mainnet', 'Fantom', 'Polygon', 'ZRX'];
+deployFunction.tags = ['Ethereum', 'Fantom', 'Polygon', 'ZRX'];
 export default deployFunction;

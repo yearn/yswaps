@@ -40,5 +40,5 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 };
 deployFunction.dependencies = ['TradeFactory'];
-deployFunction.tags = ['UniswapV2', 'Mainnet'];
+deployFunction.tags = ['UniswapV2', 'Ethereum'];
 export default deployFunction;

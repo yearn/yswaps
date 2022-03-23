@@ -25,8 +25,8 @@ describe('Sushiswap', function () {
 
   let sushiswapResponse: SwapResponse;
 
-  when('on mainnet', () => {
-    const FORK_BLOCK_NUMBER = forkBlockNumber['mainnet-swappers'];
+  when('on ethereum', () => {
+    const FORK_BLOCK_NUMBER = forkBlockNumber['ethereum-swappers'];
 
     const CHAIN_ID = 1;
 
@@ -51,7 +51,7 @@ describe('Sushiswap', function () {
         swapper,
       } = await setup.async({
         chainId: CHAIN_ID,
-        fixture: ['Common', 'Mainnet', 'Sushiswap'],
+        fixture: ['Common', 'Ethereum', 'Sushiswap'],
         swapper: 'AsyncSushiswap',
         fromTokenAddress: CRV_ADDRESS,
         toTokenAddress: DAI_ADDRESS,

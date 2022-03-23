@@ -20,8 +20,8 @@ describe('Uniswap', function () {
 
   let snapshotId: string;
 
-  when('on mainnet', () => {
-    const FORK_BLOCK_NUMBER = forkBlockNumber['mainnet-swappers'];
+  when('on ethereum', () => {
+    const FORK_BLOCK_NUMBER = forkBlockNumber['ethereum-swappers'];
 
     const CHAIN_ID = 1;
 
@@ -44,7 +44,7 @@ describe('Uniswap', function () {
         tradeFactory,
       } = await setup.sync({
         chainId: CHAIN_ID,
-        fixture: ['Common', 'Mainnet', 'UniswapV2'],
+        fixture: ['Common', 'Ethereum', 'UniswapV2'],
         swapper: 'SyncUniswapV2',
         fromTokenAddress: CRV_ADDRESS,
         toTokenAddress: DAI_ADDRESS,

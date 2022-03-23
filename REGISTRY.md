@@ -1,6 +1,6 @@
 # Version 0.2.0
 
-## ♦ Mainnet
+## ♦ Ethereum
 
 ### Base Protocol
 
@@ -31,7 +31,7 @@
 
 # Version 0.1.0
 
-## ♦ Mainnet
+## ♦ Ethereum
 
 ### Base Protocol
 

@@ -3,7 +3,7 @@ import { DeployFunction } from 'hardhat-deploy/types';
 import { getChainId, shouldVerifyContract } from '@utils/deploy';
 
 export const ONE_INCH: { [chainId: string]: string } = {
-  // Mainnet
+  // Ethereum
   '1': '0x11111112542D85B3EF69AE05771c2dCCff4fAa26',
   // Polygon
   '137': '0x11111112542D85B3EF69AE05771c2dCCff4fAa26',
@@ -31,5 +31,5 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 };
 deployFunction.dependencies = ['TradeFactory'];
-deployFunction.tags = ['Mainnet', 'Polygon', 'OneInchAggregator'];
+deployFunction.tags = ['Ethereum', 'Polygon', 'OneInchAggregator'];
 export default deployFunction;

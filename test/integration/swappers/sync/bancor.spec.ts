@@ -20,8 +20,8 @@ describe('Bancor', function () {
 
   let snapshotId: string;
 
-  when('on mainnet', () => {
-    const FORK_BLOCK_NUMBER = forkBlockNumber['mainnet-swappers'];
+  when('on ethereum', () => {
+    const FORK_BLOCK_NUMBER = forkBlockNumber['ethereum-swappers'];
 
     const CHAIN_ID = 1;
 
@@ -44,7 +44,7 @@ describe('Bancor', function () {
         tradeFactory,
       } = await setup.sync({
         chainId: CHAIN_ID,
-        fixture: ['Common', 'Mainnet', 'Bancor'],
+        fixture: ['Common', 'Ethereum', 'Bancor'],
         swapper: 'SyncBancor',
         fromTokenAddress: MPH_ADDRESS,
         toTokenAddress: DAI_ADDRESS,

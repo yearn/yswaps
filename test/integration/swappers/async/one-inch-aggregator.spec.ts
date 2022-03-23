@@ -19,7 +19,7 @@ describe('OneInchAggregator', function () {
 
   const GAS_LIMIT = 1_000_000;
 
-  context('on mainnet', () => {
+  context('on ethereum', () => {
     const CHAIN_ID = 1;
 
     const CRV_ADDRESS = '0xD533a949740bb3306d119CC777fa900bA034cd52';
