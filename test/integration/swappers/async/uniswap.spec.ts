@@ -7,7 +7,7 @@ import { getNodeUrl } from '@utils/env';
 import { IERC20, ISwapper, TradeFactory } from '@typechained';
 import forkBlockNumber from '@integration/fork-block-numbers';
 import uniswapV2, { SwapResponse } from '@scripts/dexes/uniswap-v2';
-import { WETH, UNISWAP_V2_ROUTER, UNISWAP_V2_FACTORY } from '@deploy/mainnet-swappers/uniswap_v2';
+import { WETH, UNISWAP_V2_ROUTER, UNISWAP_V2_FACTORY } from '@deploy/ethereum-swappers/uniswap_v2';
 import * as setup from '../setup';
 
 const AMOUNT_IN = utils.parseEther('10000');
@@ -25,8 +25,8 @@ describe('Uniswap', function () {
 
   let uniswapResponse: SwapResponse;
 
-  when('on mainnet', () => {
-    const FORK_BLOCK_NUMBER = forkBlockNumber['mainnet-swappers'];
+  when('on ethereum', () => {
+    const FORK_BLOCK_NUMBER = forkBlockNumber['ethereum-swappers'];
 
     const CHAIN_ID = 1;
 
@@ -51,7 +51,7 @@ describe('Uniswap', function () {
         swapper,
       } = await setup.async({
         chainId: CHAIN_ID,
-        fixture: ['Common', 'Mainnet', 'UniswapV2'],
+        fixture: ['Common', 'Ethereum', 'UniswapV2'],
         swapper: 'AsyncUniswapV2',
         fromTokenAddress: CRV_ADDRESS,
         toTokenAddress: DAI_ADDRESS,

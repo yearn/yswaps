@@ -40,5 +40,5 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   }
 };
 deployFunction.dependencies = ['TradeFactory'];
-deployFunction.tags = ['Bancor', 'Mainnet'];
+deployFunction.tags = ['Bancor', 'Ethereum'];
 export default deployFunction;

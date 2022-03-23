@@ -20,8 +20,8 @@ describe('Sushiswap', function () {
 
   let snapshotId: string;
 
-  when('on mainnet', () => {
-    const FORK_BLOCK_NUMBER = forkBlockNumber['mainnet-swappers'];
+  when('on ethereum', () => {
+    const FORK_BLOCK_NUMBER = forkBlockNumber['ethereum-swappers'];
 
     const CHAIN_ID = 1;
 
@@ -44,7 +44,7 @@ describe('Sushiswap', function () {
         tradeFactory,
       } = await setup.sync({
         chainId: CHAIN_ID,
-        fixture: ['Common', 'Mainnet', 'Sushiswap'],
+        fixture: ['Common', 'Ethereum', 'Sushiswap'],
         swapper: 'SyncSushiswap',
         fromTokenAddress: CRV_ADDRESS,
         toTokenAddress: DAI_ADDRESS,

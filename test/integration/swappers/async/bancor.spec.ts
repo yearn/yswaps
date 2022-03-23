@@ -24,8 +24,8 @@ describe('Bancor', function () {
 
   let bancorResponse: SwapResponse;
 
-  when('on mainnet', () => {
-    const FORK_BLOCK_NUMBER = forkBlockNumber['mainnet-bancor-swapper'];
+  when('on ethereum', () => {
+    const FORK_BLOCK_NUMBER = forkBlockNumber['ethereum-bancor-swapper'];
 
     const CHAIN_ID = 1;
 
@@ -49,7 +49,7 @@ describe('Bancor', function () {
         swapper,
       } = await setup.async({
         chainId: CHAIN_ID,
-        fixture: ['Common', 'Mainnet', 'Bancor'],
+        fixture: ['Common', 'Ethereum', 'Bancor'],
         swapper: 'AsyncBancor',
         fromTokenAddress: BNT_ADDRESS,
         toTokenAddress: USDC_ADDRESS,

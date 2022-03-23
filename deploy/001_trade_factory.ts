@@ -3,7 +3,7 @@ import { DeployFunction } from 'hardhat-deploy/types';
 import { getChainId, shouldVerifyContract } from '@utils/deploy';
 
 export const MECHANICS_REGISTRY: { [chainId: string]: string } = {
-  // Mainnet
+  // Ethereum
   '1': '0xe8d5a85758fe98f7dce251cad552691d49b499bb',
   // Polygon
   '137': '0x7a99923aa2efa71178bb11294349ec1f6b23a814',
@@ -12,7 +12,7 @@ export const MECHANICS_REGISTRY: { [chainId: string]: string } = {
 };
 
 export const MASTER_ADMIN: { [chainId: string]: string } = {
-  // Mainnet (ymech multisig)
+  // Ethereum (ymech multisig)
   '1': '0x2C01B4AD51a67E2d8F02208F54dF9aC4c0B778B6',
   // Polygon
   '137': '0x31ABE8B1A645ac2d81201869d6eC77CF192e7d7F',
@@ -21,7 +21,7 @@ export const MASTER_ADMIN: { [chainId: string]: string } = {
 };
 
 export const SWAPPER_ADDER: { [chainId: string]: string } = {
-  // Mainnet (ymech multisig)
+  // Ethereum (ymech multisig)
   '1': '0x2C01B4AD51a67E2d8F02208F54dF9aC4c0B778B6',
   // Polygon
   '137': '0x31ABE8B1A645ac2d81201869d6eC77CF192e7d7F',
@@ -30,7 +30,7 @@ export const SWAPPER_ADDER: { [chainId: string]: string } = {
 };
 
 export const SWAPPER_SETTER: { [chainId: string]: string } = {
-  // Mainnet (ymech multisig)
+  // Ethereum (ymech multisig)
   '1': '0x2C01B4AD51a67E2d8F02208F54dF9aC4c0B778B6',
   // Polygon
   '137': '0x31ABE8B1A645ac2d81201869d6eC77CF192e7d7F',
@@ -39,7 +39,7 @@ export const SWAPPER_SETTER: { [chainId: string]: string } = {
 };
 
 export const STRATEGY_MODIFIER: { [chainId: string]: string } = {
-  // Mainnet (ymech multisig)
+  // Ethereum (ymech multisig)
   '1': '0x2C01B4AD51a67E2d8F02208F54dF9aC4c0B778B6',
   // Polygon
   '137': '0x31ABE8B1A645ac2d81201869d6eC77CF192e7d7F',
