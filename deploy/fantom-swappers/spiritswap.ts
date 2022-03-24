@@ -1,16 +1,17 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { shouldVerifyContract } from '@utils/deploy';
-
-export const SPIRITSWAP_FACTORY = '0xef45d134b73241eda7703fa787148d9c9f4950b0';
-export const SPIRITSWAP_ROUTER = '0x16327e3fbdaca3bcf7e38f5af2599d2ddc33ae52';
-export const WETH = '0x74b23882a30290451A17c44f4F05243b6b58C76d';
-export const WFTM = '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83';
+import { SPIRITSWAP_FACTORY_REGISTRY, SPIRITSWAP_ROUTER_REGISTRY, WETH_REGISTRY, WFTM_REGISTRY } from '@deploy/addresses-registry';
 
 const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer, governor } = await hre.getNamedAccounts();
 
   const tradeFactory = await hre.deployments.get('TradeFactory');
+
+  const SPIRITSWAP_FACTORY = SPIRITSWAP_FACTORY_REGISTRY.get(250);
+  const SPIRITSWAP_ROUTER = SPIRITSWAP_ROUTER_REGISTRY.get(250);
+  const WETH = WETH_REGISTRY.get(250);
+  const WFTM = WFTM_REGISTRY.get(250);
 
   const asyncDeploy = await hre.deployments.deploy('AsyncSpiritswap', {
     contract: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',

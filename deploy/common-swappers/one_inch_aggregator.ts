@@ -1,13 +1,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { getChainId, shouldVerifyContract } from '@utils/deploy';
-
-export const ONE_INCH: { [chainId: string]: string } = {
-  // Ethereum
-  '1': '0x11111112542D85B3EF69AE05771c2dCCff4fAa26',
-  // Polygon
-  '137': '0x11111112542D85B3EF69AE05771c2dCCff4fAa26',
-};
+import { ONE_INCH_REGISTRY } from '@deploy/addresses-registry';
 
 const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer, governor } = await hre.getNamedAccounts();
@@ -19,14 +13,14 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const deploy = await hre.deployments.deploy('OneInchAggregator', {
     contract: 'solidity/contracts/swappers/async/OneInchAggregatorSwapper.sol:OneInchAggregatorSwapper',
     from: deployer,
-    args: [governor, tradeFactory.address, ONE_INCH[chainId]],
+    args: [governor, tradeFactory.address, ONE_INCH_REGISTRY.get(chainId)],
     log: true,
   });
 
   if (await shouldVerifyContract(deploy)) {
     await hre.run('verify:verify', {
       address: deploy.address,
-      constructorArguments: [governor, tradeFactory.address, ONE_INCH[chainId]],
+      constructorArguments: [governor, tradeFactory.address, ONE_INCH_REGISTRY.get(chainId)],
     });
   }
 };

@@ -1,11 +1,7 @@
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { DeployFunction } from 'hardhat-deploy/types';
 import { shouldVerifyContract } from '@utils/deploy';
-
-export const SOLIDLY_FACTORY = '0x3faab499b519fdc5819e3d7ed0c26111904cbc28';
-export const SOLIDLY_ROUTER = '0xa38cd27185a464914D3046f0AB9d43356B34829D';
-export const WETH = '0x74b23882a30290451A17c44f4F05243b6b58C76d';
-export const WFTM = '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83';
+import { SOLIDLY_ROUTER_REGISTRY } from '@deploy/addresses-registry';
 
 const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployer, governor } = await hre.getNamedAccounts();
@@ -15,14 +11,14 @@ const deployFunction: DeployFunction = async function (hre: HardhatRuntimeEnviro
   const asyncDeploy = await hre.deployments.deploy('AsyncSolidly', {
     contract: 'solidity/contracts/swappers/async/SolidlySwapper.sol:SolidlySwapper',
     from: deployer,
-    args: [governor, tradeFactory.address, SOLIDLY_ROUTER],
+    args: [governor, tradeFactory.address, SOLIDLY_ROUTER_REGISTRY.get(250)],
     log: true,
   });
 
   if (await shouldVerifyContract(asyncDeploy)) {
     await hre.run('verify:verify', {
       address: asyncDeploy.address,
-      constructorArguments: [governor, tradeFactory.address, SOLIDLY_ROUTER],
+      constructorArguments: [governor, tradeFactory.address, SOLIDLY_ROUTER_REGISTRY.get(250)],
     });
   }
 

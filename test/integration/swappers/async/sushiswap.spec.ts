@@ -6,7 +6,7 @@ import { then, when } from '@test-utils/bdd';
 import { getNodeUrl } from '@utils/env';
 import { IERC20, ISwapper, TradeFactory } from '@typechained';
 import uniswapV2, { SwapResponse } from '@scripts/dexes/uniswap-v2';
-import { WETH, SUSHISWAP_ROUTER, SUSHISWAP_FACTORY } from '@deploy/common-swappers/sushiswap';
+import { WETH_REGISTRY, SUSHISWAP_ROUTER_REGISTRY, SUSHISWAP_FACTORY_REGISTRY } from '@deploy/addresses-registry';
 import forkBlockNumber from '@integration/fork-block-numbers';
 import * as setup from '../setup';
 
@@ -63,9 +63,9 @@ describe('Sushiswap', function () {
         tokenIn: CRV_ADDRESS,
         tokenOut: DAI_ADDRESS,
         amountIn: AMOUNT_IN,
-        uniswapV2Router: SUSHISWAP_ROUTER[CHAIN_ID],
-        uniswapV2Factory: SUSHISWAP_FACTORY[CHAIN_ID],
-        hopTokensToTest: [WETH[CHAIN_ID]],
+        uniswapV2Router: SUSHISWAP_ROUTER_REGISTRY.get(CHAIN_ID)!,
+        uniswapV2Factory: SUSHISWAP_FACTORY_REGISTRY.get(CHAIN_ID)!,
+        hopTokensToTest: [WETH_REGISTRY.get(CHAIN_ID)!],
         slippage: 3,
       });
 
@@ -138,9 +138,9 @@ describe('Sushiswap', function () {
         tokenIn: CRV_ADDRESS,
         tokenOut: DAI_ADDRESS,
         amountIn: AMOUNT_IN,
-        uniswapV2Router: SUSHISWAP_ROUTER[CHAIN_ID],
-        uniswapV2Factory: SUSHISWAP_FACTORY[CHAIN_ID],
-        hopTokensToTest: [WETH[CHAIN_ID]],
+        uniswapV2Router: SUSHISWAP_ROUTER_REGISTRY.get(CHAIN_ID)!,
+        uniswapV2Factory: SUSHISWAP_FACTORY_REGISTRY.get(CHAIN_ID)!,
+        hopTokensToTest: [WETH_REGISTRY.get(CHAIN_ID)!],
         slippage: 3,
       });
 
