@@ -35,6 +35,7 @@
     "artifacts/solidity/**/*.json",
     "!artifacts/solidity/**/**/*.dbg.json",
     "typechained",
+    "deploy/addresses-registry.ts",
     "deployments",
     "!deployments/localhost",
     "!.env",

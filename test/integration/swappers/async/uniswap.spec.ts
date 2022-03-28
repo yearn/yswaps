@@ -7,7 +7,7 @@ import { getNodeUrl } from '@utils/env';
 import { IERC20, ISwapper, TradeFactory } from '@typechained';
 import forkBlockNumber from '@integration/fork-block-numbers';
 import uniswapV2, { SwapResponse } from '@scripts/dexes/uniswap-v2';
-import { WETH, UNISWAP_V2_ROUTER, UNISWAP_V2_FACTORY } from '@deploy/ethereum-swappers/uniswap_v2';
+import { WETH_REGISTRY, UNISWAP_V2_ROUTER_REGISTRY, UNISWAP_V2_FACTORY_REGISTRY } from '@deploy/addresses-registry';
 import * as setup from '../setup';
 
 const AMOUNT_IN = utils.parseEther('10000');
@@ -63,9 +63,9 @@ describe('Uniswap', function () {
         tokenIn: CRV_ADDRESS,
         tokenOut: DAI_ADDRESS,
         amountIn: AMOUNT_IN,
-        uniswapV2Router: UNISWAP_V2_ROUTER,
-        uniswapV2Factory: UNISWAP_V2_FACTORY,
-        hopTokensToTest: [WETH],
+        uniswapV2Router: UNISWAP_V2_ROUTER_REGISTRY.get(CHAIN_ID)!,
+        uniswapV2Factory: UNISWAP_V2_FACTORY_REGISTRY.get(CHAIN_ID)!,
+        hopTokensToTest: [WETH_REGISTRY.get(CHAIN_ID)!],
         slippage: 3,
       });
 

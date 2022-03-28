@@ -7,8 +7,8 @@ import { getNodeUrl } from '@utils/env';
 import { IERC20, ISwapper, TradeFactory } from '@typechained';
 import forkBlockNumber from '@integration/fork-block-numbers';
 import solidly, { SwapResponse } from '@scripts/dexes/solidly';
-import { WETH, SOLIDLY_ROUTER, SOLIDLY_FACTORY } from '@deploy/fantom-swappers/solidly';
 import * as setup from '../setup';
+import { SOLIDLY_FACTORY_REGISTRY, SOLIDLY_ROUTER_REGISTRY } from '@deploy/addresses-registry';
 
 const AMOUNT_IN = utils.parseUnits('100', 6);
 
@@ -63,8 +63,8 @@ describe('Solidly', function () {
         tokenIn: USDC_ADDRESS,
         tokenOut: WFTM_ADDRESS,
         amountIn: AMOUNT_IN,
-        solidlyRouter: SOLIDLY_ROUTER,
-        solidlyFactory: SOLIDLY_FACTORY,
+        solidlyRouter: SOLIDLY_ROUTER_REGISTRY.get(250)!,
+        solidlyFactory: SOLIDLY_FACTORY_REGISTRY.get(250)!,
         // hopTokensToTest: [WETH],
         slippage: 3,
       });
