@@ -1,6 +1,6 @@
 {
   "name": "@yearn-mechanics/yswaps",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "YSwaps will swap enabled strategie's funds from harvests",
   "keywords": [
     "ethereum",
@@ -28,7 +28,6 @@
       "url": "https://github.com/b0dhidharma"
     }
   ],
-  "type": "commonjs",
   "files": [
     "solidity/contracts",
     "solidity/interfaces",
