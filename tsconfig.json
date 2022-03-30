@@ -24,5 +24,6 @@
       "@eth-sdk-types": ["node_modules/.dethcrypto/eth-sdk-client/esm/types"]
     }
   },
-  "include": ["hardhat.config.ts", "./scripts", "./deploy", "./test"]
+  "include": ["./scripts", "./deploy", "./test"],
+  "files": ["./hardhat.config.ts"]
 }
