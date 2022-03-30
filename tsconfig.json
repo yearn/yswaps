@@ -4,8 +4,9 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
@@ -23,6 +24,5 @@
       "@eth-sdk-types": ["node_modules/.dethcrypto/eth-sdk-client/esm/types"]
     }
   },
-  "include": ["./scripts", "./deploy", "./test"],
-  "files": ["./hardhat.config.ts"]
+  "include": ["hardhat.config.ts", "./scripts", "./deploy", "./test"]
 }
