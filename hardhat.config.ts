@@ -31,6 +31,7 @@ const networks: NetworksUserConfig =
           accounts: env.getAccounts('polygon'),
         },
         ethereum: {
+          chainId: 1,
           url: env.getNodeUrl('ethereum'),
           accounts: env.getAccounts('ethereum'),
         },
