@@ -6,6 +6,21 @@ async function main() {
     name: 'AsyncBancor',
     path: 'solidity/contracts/swappers/async/BancorSwapper.sol:BancorSwapper',
   });
+
+  await verify({
+    name: 'AsyncSushiswap',
+    path: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
+  });
+
+  await verify({
+    name: 'AsyncUniswapV2',
+    path: 'solidity/contracts/swappers/async/UniswapV2Swapper.sol:UniswapV2Swapper',
+  });
+
+  await verify({
+    name: 'OneInchAggregator',
+    path: 'solidity/contracts/swappers/async/OneInchAggregatorSwapper.sol:OneInchAggregatorSwapper',
+  });
 }
 
 async function verify({ name, path }: { name: string; path: string }) {
